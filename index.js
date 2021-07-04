@@ -1,31 +1,31 @@
-//access files
-/*const filesystem=require("fs/promises");
-//create file
-filesystem.writeFile("first.txt","Hello Ecveyone");
-filesystem.appendFile("first.txt"," this is appened again")
+//Express
+//const { request } = require("express");
+//const { response } = require("express");
+const express=require("express");
 
-//delete file
-filesystem.unlink("first.txt");
+//initializing
+const sri=express()
+sri.use(express.json())
 
-//create folder
- filesystem.mkdir("second");
- //delete folder
- filesystem.rmdir("second");
-*/
-
-//OS
-const opeartingsystem=require("os");
-console.log(opeartingsystem.platform());
-console.log(opeartingsystem.arch());
-
-//environment-- It will pass variables only in run time not in compile time,to secure the dats
-console.log(process.env)
-
-//create server
-const http=require("http");
-http.createServer((request,response)=>{
-    console.log(request.headers);
-    response.end("Helo")
-}
-    )
-.listen(3000)
+sri.get("/",(request,response)=>{
+    return response.json({"hi":"heloo value"})
+})
+ sri.get("/b1/:userid",(request,response) =>{
+    
+    const users=[
+    {
+        id:1,
+        name:"sri"
+    },
+    {
+        id:2,
+        name:"srikanth"
+    }]
+     const userId=request.params.userid
+     const getUser=users.filter((user)=>parseInt(userId)===user.id)
+     if(getUser.length===0){
+         return response.json({error:"No User Found !!!!!"})
+     }
+    return response.json({user:getUser[0]})
+ })
+sri.listen(3000,() => console.log("HEy sri sevrer is sending data"));
